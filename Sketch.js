@@ -1,3 +1,6 @@
+let x = 0;
+let y = 0;
+let spacing = 10;
 var timerValue = 15;
 var good = 1;
 var star = 0;
@@ -23,8 +26,28 @@ function setup() {
 
 }
 // scene 1, the start scene
-var drawScene1 = function() {
+var drawScene1 = function () {
   currentScene = 1;
+  stroke(255)
+  if (random(1) < 0.5) {
+    line(x, y, x + 50, y + 50);
+  } else {
+    stroke(random(255),random(255),random(255));
+    line(x, y + 50, x + 50, y);
+    textSize(20);
+    fill(255);
+    text("this was created with 10 lines of code", 200, 200);
+    text("thanks for looking at my art show", 200, 300);  
+  }
+  x = x + 10;
+  if (x > width) {
+    x = 0;
+    y = y +10;
+    }
+  }
+
+var drawScene2 = function() {
+  currentScene = 2;
   man.score = 0;
   background(0, 0, 255);
   textSize(50);
@@ -41,8 +64,8 @@ var drawScene1 = function() {
   rect(width / 2, height * 3 / 4, 60, 60);
 }
 
-var drawScene2 = function() {
-  currentScene = 2;
+var drawScene3 = function() {
+  currentScene = 3;
   man.score = 0;
   background(0, 0, 255);
   textSize(50);
@@ -61,8 +84,8 @@ var drawScene2 = function() {
   fill(255);
   rect(width / 2 + 100, height / 2 + 25, 60, 60);
 }
-var drawScene3 = function() {
-  currentScene = 3;
+var drawScene4 = function() {
+  currentScene = 4;
   background(space);
   fill("red")
 
@@ -107,12 +130,12 @@ var drawScene3 = function() {
   }
 
   if (timerValue === 0) {
-    drawScene4();
+    drawScene5();
   }
 }
 
-var drawScene4 = function() {
-  currentScene = 4;
+var drawScene5 = function() {
+  currentScene = 5;
   endSceneCountdown = 0;
   man.reset();
 
@@ -162,6 +185,9 @@ function draw() {
   if (currentScene === 3) {
     drawScene3();
   }
+  if (currentScene === 4) {
+    drawScene4();
+  }
 }
 
 function timeIt() {
@@ -174,10 +200,13 @@ function timeIt() {
 function mousePressed() {
   if (currentScene === 1) {
     drawScene2();
-  } else if (currentScene === 2) {
-    timerValue = 15;
+  }
+  if (currentScene === 2) {
     drawScene3();
-  } else if (currentScene === 4) {
+  } else if (currentScene === 3) {
+    timerValue = 15;
+    drawScene4();
+  } else if (currentScene === 5) {
     drawScene1();
   }
 }
