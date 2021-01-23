@@ -246,6 +246,7 @@ function mousePressed() {
     timerValue = 15;
     drawScene3();
   } else if (currentScene === 5) {
-    drawScene1();
+    timerValue = 15;
+    drawScene3();
   }
 }
