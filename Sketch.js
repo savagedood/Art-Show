@@ -1,12 +1,13 @@
-let x = 0;
-let y = 0;
-let spacing = 10;
+
 var timerValue = 15;
 var good = 1;
 var star = 0;
 var landscape;
 var fuel;
 var man;
+var harddif;
+var endscene;
+var drag;
 var bad = [];
 var bonus = [];
 var currentScene = 1;
@@ -26,28 +27,10 @@ function setup() {
 
 }
 // scene 1, the start scene
-var drawScene1 = function () {
-  currentScene = 1;
-  stroke(255)
-  if (random(1) < 0.5) {
-    line(x, y, x + 50, y + 50);
-  } else {
-    stroke(random(255),random(255),random(255));
-    line(x, y + 50, x + 50, y);
-    textSize(20);
-    fill(255);
-    text("this was created with 10 lines of code", 200, 200);
-    text("thanks for looking at my art show", 200, 300);  
-  }
-  x = x + 10;
-  if (x > width) {
-    x = 0;
-    y = y +10;
-    }
-  }
 
-var drawScene2 = function() {
-  currentScene = 2;
+
+var drawScene1 = function() {
+  currentScene = 1;
   man.score = 0;
   background(0, 0, 255);
   textSize(50);
@@ -64,8 +47,8 @@ var drawScene2 = function() {
   rect(width / 2, height * 3 / 4, 60, 60);
 }
 
-var drawScene3 = function() {
-  currentScene = 3;
+var drawScene2 = function() {
+  currentScene = 2;
   man.score = 0;
   background(0, 0, 255);
   textSize(50);
@@ -76,6 +59,7 @@ var drawScene3 = function() {
   text("collect as many asteroid samples as you can in 15 seconds", width / 2, 75);
   text("fly your drone over the samples to pick them up", width / 2, 100);
   text("watchout for stars which will dicintergrate your samples", width / 2, 120);
+ text("press z after launch for a challenge", width / 2, 140);
   text("Click to launch drone", width / 2, 165);
   text("Asteroid ------>", width / 2, 245);
   noStroke();
@@ -84,8 +68,8 @@ var drawScene3 = function() {
   fill(255);
   rect(width / 2 + 100, height / 2 + 25, 60, 60);
 }
-var drawScene4 = function() {
-  currentScene = 4;
+var drawScene3 = function() {
+  currentScene = 3;
   background(space);
   fill("red")
 
@@ -133,7 +117,55 @@ var drawScene4 = function() {
     drawScene5();
   }
 }
+var drawScene4 = function() {
+  currentScene = 4;
+  background(harddif);
+  fill("red")
 
+  if (timerValue > 10) {
+    text("0:" + timerValue, 500, 85);
+  }
+  if (timerValue <= 10) {
+    text('0:0' + timerValue, 500, 85);
+  }
+  if (timerValue === 10) {
+    text('0:' + timerValue, 500, 85);
+  }
+  if (timerValue === 0) {
+    text('game over', width / 2, height / 2 + 15);
+  }
+
+  // changed this number, not sure what it does, will check it out later
+  translate(-man.pos.x + 50, 0);
+  endSceneCountdown += 1.2;
+
+  let gravity = createVector(0, 0.20);
+  man.applyForce(gravity);
+
+  man.update();
+  man.display();
+  man.edges();
+
+  for (let i = 0; i < 150; i++) {
+    if (man.hits(bad[i])) {
+      console.log(bad[i].pos.x);
+    }
+    bad[i].show();
+    bad[i].update();
+  }
+
+  for (let j = 0; j < 35; j++) {
+    if (man.hits(bonus[j])) {
+      console.log(bonus[j].pos.x);
+    }
+    bonus[j].show();
+    bonus[j].update();
+  }
+
+  if (timerValue === 0) {
+    drawScene5();
+  }
+}
 var drawScene5 = function() {
   currentScene = 5;
   endSceneCountdown = 0;
@@ -159,20 +191,27 @@ var drawScene5 = function() {
 
   text("You finished the game and returned to earth!", width / 2, 50);
   text("Your score was " + man.score + ". Good job!", width / 2, 80);
-  text("click the play button to refuel and try again", width / 2, 300);
+  text("click to play again", width / 2, 300);
 
 }
+
 // changed the height of the jump
 function keyPressed() {
   if (key == " ") {
     let jump = createVector(0, -6);
     man.applyForce(jump);
   }
+  if (key == "z") {
+    drawScene4();
+  }
 }
 
 function preload() {
   space = loadImage('download (3).jpg')
   fuel = loadImage('fuel-gauge.jpg')
+  endscene = loadImage('Thumbs.Up_.jpg')
+  drag = loadImage('9-95700_firework-explosion-transparent-background.png')
+  harddif = loadImage('F1.large-2-1200x800.jpg')
 }
 
 function draw() {
@@ -188,6 +227,8 @@ function draw() {
   if (currentScene === 4) {
     drawScene4();
   }
+
+
 }
 
 function timeIt() {
@@ -198,14 +239,12 @@ function timeIt() {
 }
 
 function mousePressed() {
+
   if (currentScene === 1) {
     drawScene2();
-  }
-  if (currentScene === 2) {
-    drawScene3();
-  } else if (currentScene === 3) {
+  } else if (currentScene === 2) {
     timerValue = 15;
-    drawScene4();
+    drawScene3();
   } else if (currentScene === 5) {
     drawScene1();
   }
