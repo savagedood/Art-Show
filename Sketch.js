@@ -1,4 +1,3 @@
-
 var timerValue = 15;
 var good = 1;
 var star = 0;
@@ -61,7 +60,7 @@ var drawScene2 = function() {
   text("fly your drone over the samples to pick them up", width / 2, 100);
   text("watchout for stars which will dicintergrate your samples", width / 2, 120);
  text("press z after launch for a challenge", width / 2, 140);
-  text("Click to launch drone", width / 2, 165);
+  text("press s launch drone", width / 2, 165);
   text("Asteroid ------>", width / 2, 245);
   noStroke();
   fill(255);
@@ -118,6 +117,7 @@ var drawScene3 = function() {
     drawScene5();
   }
 }
+
 var drawScene4 = function() {
   currentScene = 4;
   background(harddif);
@@ -206,7 +206,9 @@ function keyPressed() {
   if (key == "z") {
     drawScene4();
   }
-  else if (currentScene === 4 && key == "z") {
+  
+  if (key == "s"){
+    timerValue = 15;
     drawScene3();
   }
 }
@@ -241,16 +243,13 @@ function timeIt() {
     timerValue--;
   }
 
-  
 }
 
 function mousePressed() {
 
   if (currentScene === 1) {
     drawScene2();
-  } else if (currentScene === 2) {
-    timerValue = 15;
-    drawScene3();
+ 
   } else if (currentScene === 5) {
     timerValue = 15;
     man.score = 0;
