@@ -6,7 +6,6 @@ function Person() {
   this.vel = createVector(1, 0);
   this.acc = createVector(0, 0);
   this.score = 0;
-
   this.applyForce = function(force) {
     var f = force.copy();
     f.div(10);
@@ -43,15 +42,13 @@ function Person() {
       case 3:
         this.score += 3;
         break;
-      case 4:
-        this.score += 4;
-        break;
       case star:
-        this.score -= 10;
+        this.score = 0;
         break;
       }
       Obs.pos.y = -400;
     }
+
   }
   // I changed some of these numbers so that my person is displayed on the ground properly
   // I added a second edge on the top of the screen
