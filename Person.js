@@ -20,23 +20,36 @@ function Person() {
   }
 
   this.display = function() {
-    fill("red");
+    fill("yellow");
     stroke(255);
     rect(this.pos.x, this.pos.y, 10, 10);
 
     stroke(255, 0, 0);
-    textSize(100);
+    textSize(25);
     textAlign(CENTER);
-    text(this.score, this.pos.x + 10, 90);
+    text(this.score, this.pos.x + 80, 25);
   }
 
   this.hits = function(Obs) {
-    if (Obs.quality === good && (Obs.pos.x >= this.pos.x && Obs.pos.x <= (this.pos.x + 10)) && (Obs.pos.y >= this.pos.y && Obs.pos.y <= (this.pos.y + 10))) {
-      this.score+=2;
-      Obs.pos.y = -400;
-    }
-    else if (Obs.quality === star && (Obs.pos.x >= this.pos.x && Obs.pos.x <= (this.pos.x + 10)) && (Obs.pos.y >= this.pos.y && Obs.pos.y <= (this.pos.y + 10))) {
-      this.score-= 10;
+    if ((Obs.pos.x >= this.pos.x && Obs.pos.x <= (this.pos.x + 10)) && (Obs.pos.y >= this.pos.y && Obs.pos.y <= (this.pos.y + 10))) {
+      // We have a hit - now lets find out what the quality level is
+      switch (Obs.quality) {
+      case 1:
+        this.score += 1;
+        break;
+      case 2:
+        this.score += 2;
+        break;
+      case 3:
+        this.score += 3;
+        break;
+      case 4:
+        this.score += 4;
+        break;
+      case star:
+        this.score -= 10;
+        break;
+      }
       Obs.pos.y = -400;
     }
   }
@@ -46,9 +59,9 @@ function Person() {
     if (this.pos.y > height - 11) {
       this.vel.y *= 0;
       this.pos.y = height - 11;
-    } else if (this.pos.y < 0) {
+    } else if (this.pos.y < 31) {
       this.vel.y *= 0;
-      this.pos.y = 0;
+      this.pos.y = 31;
     }
   }
 
