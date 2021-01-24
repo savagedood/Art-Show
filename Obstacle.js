@@ -1,3 +1,4 @@
+
 class Obstacle {
   // what the features of the obstacle will be
   constructor() {
