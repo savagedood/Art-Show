@@ -19,6 +19,7 @@ class Obstacle {
     // changing these numbers makes the collision not work, why?
     rect(this.pos.x, this.pos.y, 10, 10) // try changing the numbers in person collision too
     
+    
   }
 
   update() {
