@@ -1,13 +1,14 @@
 class Obstacle {
+  // what the features of the obstacle will be
   constructor() {
-    this.pos = createVector(random(man.pos.x + 40, man.pos.x + 1200), random(35, height -11));
+    this.pos = createVector(random(man.pos.x + 40, man.pos.x + 1800), random(35, height -11));
     this.vel = createVector(-0.25, 0);
     this.acc = createVector(0, 0);
-    this.quality = floor(random()*4)+1;
+    this.quality = floor(random()*3)+1;
   
    
   }
-
+// what will be shown
   show() {
     noStroke();
     if (currentScene === 3) {
@@ -16,12 +17,9 @@ class Obstacle {
           fill("white");
           break;
         case 2:
-          fill(211,211,211);
+          fill("grey");
           break;
         case 3:
-          fill(169,169,169);
-          break;
-        case 4:
           fill("black");
           break;
       }
@@ -41,14 +39,14 @@ class Obstacle {
     this.acc.set(0, 0);
   }
 }
-
+// what the bad obstacle is (the star)
 class Special extends Obstacle {
   constructor() {
     super();
      this.quality = star;
 
   }
-
+// how it will be shown
   show() {
     fill("red");
     ellipse(this.pos.x, this.pos.y, 15, 15)
