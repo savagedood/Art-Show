@@ -36,6 +36,7 @@ var drawScene1 = function() {
   textSize(50);
   textAlign(CENTER);
   fill(0);
+  textFont('Georgia');
   text("Asteroid collector!!!", width / 2, 50);
   textSize(30);
   fill("red")
@@ -71,7 +72,7 @@ var drawScene2 = function() {
 var drawScene3 = function() {
   currentScene = 3;
   background(space);
-  fill("red")
+  fill("yellow")
 
   if (timerValue > 10) {
     text("0:" + timerValue, 500, 85);
@@ -120,7 +121,7 @@ var drawScene3 = function() {
 var drawScene4 = function() {
   currentScene = 4;
   background(harddif);
-  fill("red")
+  fill("yellow")
 
   if (timerValue > 10) {
     text("0:" + timerValue, 500, 85);
@@ -188,7 +189,7 @@ var drawScene5 = function() {
   textAlign(CENTER);
   noStroke();
   fill("red");
-
+  textFont('bold');
   text("You finished the game and returned to earth!", width / 2, 50);
   text("Your score was " + man.score + ". Good job!", width / 2, 80);
   text("click to play again", width / 2, 300);
@@ -201,8 +202,12 @@ function keyPressed() {
     let jump = createVector(0, -6);
     man.applyForce(jump);
   }
+  //when pressed it changes to the harder difficulty
   if (key == "z") {
     drawScene4();
+  }
+  else if (currentScene === 4 && key == "z") {
+    drawScene3();
   }
 }
 
@@ -230,7 +235,7 @@ function draw() {
 
 
 }
-
+//if the timer value is greater than 0 it will keep counting down by 1 each time
 function timeIt() {
   if (timerValue > 0) {
     timerValue--;
@@ -247,6 +252,7 @@ function mousePressed() {
     drawScene3();
   } else if (currentScene === 5) {
     timerValue = 15;
+    man.score = 0;
     drawScene3();
   }
 }
