@@ -10,10 +10,15 @@ var drag;
 var bad = [];
 var bonus = [];
 var currentScene = 1;
-var endSceneCountdown = 0;
+var sceneWidth = 640
+var sceneHeight = 360
+var spaceImage = 'download (3).jpg';
+var fuelImage = 'fuel-gauge.jpg';
+var dragImage = '9-95700_firework-explosion-transparent-background.png';
+var harddifImage = 'F1.large-2-1200x800.jpg';
 
 function setup() {
-  createCanvas(640, 360);
+  createCanvas(sceneWidth, sceneHeight);
   man = new Person();
   drawScene1();
   for (let i = 0; i < 150; i++) {
@@ -59,7 +64,7 @@ var drawScene2 = function() {
   text("collect as many asteroid samples as you can in 15 seconds", width / 2, 75);
   text("fly your drone over the samples to pick them up", width / 2, 100);
   text("watchout for stars which will dicintergrate your samples", width / 2, 120);
- text("press z after launch for a challenge", width / 2, 140);
+  text("press z after launch for a challenge", width / 2, 140);
   text("press s launch drone", width / 2, 165);
   text("Asteroid ------>", width / 2, 245);
   noStroke();
@@ -68,27 +73,26 @@ var drawScene2 = function() {
   fill(255);
   rect(width / 2 + 100, height / 2 + 25, 60, 60);
 }
+
 var drawScene3 = function() {
   currentScene = 3;
   background(space);
-  fill("yellow")
 
-  if (timerValue > 10) {
-    text("0:" + timerValue, 500, 85);
+  // Cretae the top bar where the score and timer will be shown.
+  fill("black")
+  rect(0, 0, sceneWidth, 30);
+  textSize(25);
+  fill("yellow");
+  text("Score: ", 75, 25);
+  if (timerValue >= 10) {
+    text('0:' + timerValue, 500, 25);
+  } else if (timerValue < 10) {
+    text('0:0' + timerValue, 500, 25);
   }
-  if (timerValue <= 10) {
-    text('0:0' + timerValue, 500, 85);
-  }
-  if (timerValue === 10) {
-    text('0:' + timerValue, 500, 85);
-  }
-  if (timerValue === 0) {
-    text('game over', width / 2, height / 2 + 15);
-  }
+
 
   // changed this number, not sure what it does, will check it out later
   translate(-man.pos.x + 50, 0);
-  endSceneCountdown += 1.2;
 
   let gravity = createVector(0, 0.20);
   man.applyForce(gravity);
@@ -121,24 +125,23 @@ var drawScene3 = function() {
 var drawScene4 = function() {
   currentScene = 4;
   background(harddif);
-  fill("yellow")
 
-  if (timerValue > 10) {
-    text("0:" + timerValue, 500, 85);
+  // Cretae the top bar where the score and timer will be shown.
+  stroke(255, 0, 0);
+  fill("black");
+  rect(0, 0, sceneWidth, 30);
+  textSize(25);
+  fill("yellow");
+  text("Score: ", 60, 25);
+  if (timerValue >= 10) {
+    text('0:' + timerValue, 500, 25);
+  } else if (timerValue < 10) {
+    text('0:0' + timerValue, 500, 25);
   }
-  if (timerValue <= 10) {
-    text('0:0' + timerValue, 500, 85);
-  }
-  if (timerValue === 10) {
-    text('0:' + timerValue, 500, 85);
-  }
-  if (timerValue === 0) {
-    text('game over', width / 2, height / 2 + 15);
-  }
+
 
   // changed this number, not sure what it does, will check it out later
   translate(-man.pos.x + 50, 0);
-  endSceneCountdown += 1.2;
 
   let gravity = createVector(0, 0.20);
   man.applyForce(gravity);
@@ -169,7 +172,6 @@ var drawScene4 = function() {
 }
 var drawScene5 = function() {
   currentScene = 5;
-  endSceneCountdown = 0;
   man.reset();
 
   resetMatrix();
@@ -206,19 +208,18 @@ function keyPressed() {
   if (key == "z") {
     drawScene4();
   }
-  
-  if (key == "s"){
+
+  if (key == "s") {
     timerValue = 15;
     drawScene3();
   }
 }
 
 function preload() {
-  space = loadImage('download (3).jpg')
-  fuel = loadImage('fuel-gauge.jpg')
-  endscene = loadImage('Thumbs.Up_.jpg')
-  drag = loadImage('9-95700_firework-explosion-transparent-background.png')
-  harddif = loadImage('F1.large-2-1200x800.jpg')
+  space = loadImage(spaceImage)
+  fuel = loadImage(fuelImage)
+  drag = loadImage(dragImage)
+  harddif = loadImage(harddifImage)
 }
 
 function draw() {
@@ -249,7 +250,7 @@ function mousePressed() {
 
   if (currentScene === 1) {
     drawScene2();
- 
+
   } else if (currentScene === 5) {
     timerValue = 15;
     man.score = 0;
