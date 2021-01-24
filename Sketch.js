@@ -1,42 +1,44 @@
-var timerValue = 15;
+// the varibles use in the code
+var blackstreak = 0;
+var numGoodObstacles = 100;
+var numBadObstacles = 75;
+var timerValue = 20;
 var good = 1;
 var star = 0;
 var landscape;
 var fuel;
 var man;
 var harddif;
-var endscene;
-var drag;
-var bad = [];
-var bonus = [];
+var firstScene;
+var goodObstacles = [];
+var badObstacles = [];
 var currentScene = 1;
 var sceneWidth = 640
 var sceneHeight = 360
 var spaceImage = 'download (3).jpg';
 var fuelImage = 'fuel-gauge.jpg';
-var dragImage = '9-95700_firework-explosion-transparent-background.png';
 var harddifImage = 'F1.large-2-1200x800.jpg';
+var firstSceneImage = '458820.jpeg';
 
+// setting up what the screen will look like
 function setup() {
   createCanvas(sceneWidth, sceneHeight);
   man = new Person();
   drawScene1();
-  for (let i = 0; i < 150; i++) {
-    bad[i] = new Obstacle();
+  for (let i = 0; i < numGoodObstacles; i++) {
+    goodObstacles[i] = new Obstacle();
   }
-  for (let j = 0; j < 35; j++) {
-    bonus[j] = new Special();
+  for (let j = 0; j < numBadObstacles; j++) {
+    badObstacles[j] = new Special();
   }
   setInterval(timeIt, 1000);
 
 }
 // scene 1, the start scene
-
-
 var drawScene1 = function() {
   currentScene = 1;
   man.score = 0;
-  background(0, 0, 255);
+  background(firstSceneImage);
   textSize(50);
   textAlign(CENTER);
   fill(0);
@@ -51,7 +53,7 @@ var drawScene1 = function() {
   fill(255);
   rect(width / 2, height * 3 / 4, 60, 60);
 }
-
+//the info screen/instructions
 var drawScene2 = function() {
   currentScene = 2;
   man.score = 0;
@@ -64,7 +66,7 @@ var drawScene2 = function() {
   text("collect as many asteroid samples as you can in 15 seconds", width / 2, 75);
   text("fly your drone over the samples to pick them up", width / 2, 100);
   text("watchout for stars which will dicintergrate your samples", width / 2, 120);
-  text("press z after launch for a challenge", width / 2, 140);
+  text("press z for a challenge", width / 2, 140);
   text("press s launch drone", width / 2, 165);
   text("Asteroid ------>", width / 2, 245);
   noStroke();
@@ -73,7 +75,7 @@ var drawScene2 = function() {
   fill(255);
   rect(width / 2 + 100, height / 2 + 25, 60, 60);
 }
-
+//the easy difficulty scene (the game)
 var drawScene3 = function() {
   currentScene = 3;
   background(space);
@@ -101,27 +103,28 @@ var drawScene3 = function() {
   man.display();
   man.edges();
 
-  for (let i = 0; i < 150; i++) {
-    if (man.hits(bad[i])) {
-      console.log(bad[i].pos.x);
+  for (let i = 0; i < numGoodObstacles; i++) {
+    if (man.hits(goodObstacles[i])) {
+      console.log(goodObstacles[i].pos.x);
     }
-    bad[i].show();
-    bad[i].update();
+    goodObstacles[i].show();
+    goodObstacles[i].update();
   }
 
-  for (let j = 0; j < 35; j++) {
-    if (man.hits(bonus[j])) {
-      console.log(bonus[j].pos.x);
+  for (let j = 0; j < numBadObstacles; j++) {
+    if (man.hits(badObstacles[j])) {
+      console.log(badObstacles[j].pos.x);
     }
-    bonus[j].show();
-    bonus[j].update();
+    badObstacles[j].show();
+    badObstacles[j].update();
   }
 
   if (timerValue === 0) {
     drawScene5();
   }
-}
 
+}
+// the hard difficulty (the game)
 var drawScene4 = function() {
   currentScene = 4;
   background(harddif);
@@ -132,12 +135,14 @@ var drawScene4 = function() {
   rect(0, 0, sceneWidth, 30);
   textSize(25);
   fill("yellow");
-  text("Score: ", 60, 25);
+  text("Score: ", 75, 25);
   if (timerValue >= 10) {
     text('0:' + timerValue, 500, 25);
   } else if (timerValue < 10) {
     text('0:0' + timerValue, 500, 25);
   }
+
+
 
 
   // changed this number, not sure what it does, will check it out later
@@ -150,40 +155,42 @@ var drawScene4 = function() {
   man.display();
   man.edges();
 
-  for (let i = 0; i < 150; i++) {
-    if (man.hits(bad[i])) {
-      console.log(bad[i].pos.x);
+  for (let i = 0; i < numGoodObstacles; i++) {
+    if (man.hits(goodObstacles[i])) {
+      console.log(goodObstacles[i].pos.x);
     }
-    bad[i].show();
-    bad[i].update();
+    goodObstacles[i].show();
+    goodObstacles[i].update();
   }
 
-  for (let j = 0; j < 35; j++) {
-    if (man.hits(bonus[j])) {
-      console.log(bonus[j].pos.x);
+  for (let j = 0; j < numBadObstacles; j++) {
+    if (man.hits(badObstacles[j])) {
+      console.log(badObstacles[j].pos.x);
     }
-    bonus[j].show();
-    bonus[j].update();
+    badObstacles[j].show();
+    badObstacles[j].update();
   }
 
   if (timerValue === 0) {
     drawScene5();
   }
+
 }
+//the end scene
 var drawScene5 = function() {
   currentScene = 5;
   man.reset();
 
   resetMatrix();
 
-  bad = [];
-  for (let i = 0; i < 150; i++) {
-    bad[i] = new Obstacle();
+  goodObstacles = [];
+  for (let i = 0; i < numGoodObstacles; i++) {
+    goodObstacles[i] = new Obstacle();
   }
 
-  bonus = [];
-  for (let j = 0; j < 35; j++) {
-    bonus[j] = new Special();
+  badObstacles = [];
+  for (let j = 0; j < numBadObstacles; j++) {
+    badObstacles[j] = new Special();
   }
 
   background(fuel);
@@ -193,8 +200,8 @@ var drawScene5 = function() {
   fill("red");
   textFont('bold');
   text("You finished the game and returned to earth!", width / 2, 50);
-  text("Your score was " + man.score + ". Good job!", width / 2, 80);
-  text("click to play again", width / 2, 300);
+  text("Your score was " + man.score + ". good job!", width / 2, 80);
+  text("click to refuel drone and play again", width / 2, 300);
 
 }
 
@@ -205,12 +212,13 @@ function keyPressed() {
     man.applyForce(jump);
   }
   //when pressed it changes to the harder difficulty
-  if (key == "z") {
+  if (key == "z" && currentScene === 2) {
     drawScene4();
+    timerValue = 20;
   }
 
-  if (key == "s") {
-    timerValue = 15;
+  if (key == "s" && currentScene === 2) {
+    timerValue = 20;
     drawScene3();
   }
 }
@@ -218,8 +226,8 @@ function keyPressed() {
 function preload() {
   space = loadImage(spaceImage)
   fuel = loadImage(fuelImage)
-  drag = loadImage(dragImage)
   harddif = loadImage(harddifImage)
+  firstScene = loadImage(firstSceneImage)
 }
 
 function draw() {
@@ -245,15 +253,14 @@ function timeIt() {
   }
 
 }
-
+// if you click your mouse and the criteria matches it will change the scene
 function mousePressed() {
 
   if (currentScene === 1) {
     drawScene2();
 
   } else if (currentScene === 5) {
-    timerValue = 15;
-    man.score = 0;
-    drawScene3();
+    timerValue = 20;   
+    drawScene2();
   }
 }
