@@ -1,16 +1,30 @@
 class Obstacle {
   constructor() {
-    this.pos = createVector(random(man.pos.x + 40, man.pos.x + 1200), random(height - 11));
+    this.pos = createVector(random(man.pos.x + 40, man.pos.x + 1200), random(35, height -11));
     this.vel = createVector(-0.25, 0);
     this.acc = createVector(0, 0);
-    this.quality = good;
+    this.quality = floor(random()*4)+1;
+  
    
   }
 
   show() {
     noStroke();
-     if (currentScene === 3) {
-      fill(random(255));
+    if (currentScene === 3) {
+      switch(this.quality) {
+        case 1:
+          fill("white");
+          break;
+        case 2:
+          fill(211,211,211);
+          break;
+        case 3:
+          fill(169,169,169);
+          break;
+        case 4:
+          fill("black");
+          break;
+      }
     }
     if (currentScene === 4) {
       fill(0)
@@ -18,7 +32,6 @@ class Obstacle {
     }
     // changing these numbers makes the collision not work, why?
     rect(this.pos.x, this.pos.y, 10, 10) // try changing the numbers in person collision too
-    
     
   }
 
@@ -37,8 +50,8 @@ class Special extends Obstacle {
   }
 
   show() {
-    fill(255, 165, 0);
-    ellipse(this.pos.x, this.pos.y, 20, 20)
+    fill("red");
+    ellipse(this.pos.x, this.pos.y, 15, 15)
 
   }
 }
