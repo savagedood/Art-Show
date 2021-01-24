@@ -5,7 +5,7 @@ function Person() {
   this.pos = createVector(50, height - 10);
   this.vel = createVector(1, 0);
   this.acc = createVector(0, 0);
-  this.score = 0;
+  this.score = this.score * streak;
   this.applyForce = function(force) {
     var f = force.copy();
     f.div(10);
@@ -26,7 +26,7 @@ function Person() {
     stroke(255, 0, 0);
     textSize(25);
     textAlign(CENTER);
-    text(this.score, this.pos.x + 80, 25);
+    text(this.score * streak , this.pos.x + 80, 25);
   }
 
   this.hits = function(Obs) {
@@ -35,15 +35,19 @@ function Person() {
       switch (Obs.quality) {
       case 1:
         this.score += 1;
+          streak+=1;
         break;
       case 2:
         this.score += 2;
+          streak+=1;
         break;
       case 3:
         this.score += 3;
+          streak+=1;
         break;
       case star:
-        this.score = 0;
+        this.score -= 10;
+          streak = 0;
         break;
       }
       Obs.pos.y = -400;
