@@ -1,5 +1,5 @@
 // the varibles use in the code
-var blackstreak = 0;
+var streak = 0;
 var numGoodObstacles = 100;
 var numBadObstacles = 75;
 var timerValue = 20;
@@ -63,7 +63,7 @@ var drawScene2 = function() {
   fill("white");
   text("The Task", width / 2, 50);
   textSize(20);
-  text("collect as many asteroid samples as you can in 15 seconds", width / 2, 75);
+  text("collect as many asteroid samples as you can in 20 seconds", width / 2, 75);
   text("fly your drone over the samples to pick them up", width / 2, 100);
   text("watchout for stars which will dicintergrate your samples", width / 2, 120);
   text("press z for a challenge", width / 2, 140);
@@ -200,7 +200,7 @@ var drawScene5 = function() {
   fill("red");
   textFont('bold');
   text("You finished the game and returned to earth!", width / 2, 50);
-  text("Your score was " + man.score + ". good job!", width / 2, 80);
+  text("Your score was " + man.score * streak + ". good job!", width / 2, 80);
   text("click to refuel drone and play again", width / 2, 300);
 
 }
