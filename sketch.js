@@ -65,8 +65,9 @@ var drawScene2 = function() {
   text("- collect as many asteroid samples as you can in 20 seconds", width / 8, 85);
   text("- fly your drone over the samples to pick them up", width / 8, 110);
   text("- watchout for stars which will discintergrate your samples", width / 8, 135);
-  text("- press z for black hole samples", width / 8, 160);
-  text("- press s for galaxy sameples", width / 8, 185);
+  text("- press z for black hole", width / 8, 160);
+  text("- press s for galaxy", width / 8, 185);
+  text("- (your score will increase alot due to your collected streak)", width / 8, 210);
   text("1 pt Asteroid", width / 4, 245);
   text("2 pt Asteroid", width / 4, 270);
   text("3 pt Asteroid", width / 4, 295);
