@@ -34,6 +34,7 @@ function Person() {
   this.hits = function(Obs) {
     if ((Obs.pos.x >= this.pos.x && Obs.pos.x <= (this.pos.x + 10)) && (Obs.pos.y >= this.pos.y && Obs.pos.y <= (this.pos.y + 10))) {
       // We have a hit - now lets find out what the quality level is and when a hit hppens streak will increase by 1
+      // what i claim to be my own idea 
       switch (Obs.quality) {
       case 1:
         streak+=1;
